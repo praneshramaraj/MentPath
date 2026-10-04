@@ -1,5 +1,5 @@
-import json
-from typing import List, Union
+import os
+from typing import List, Optional, Union
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -12,8 +12,15 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
 
     # Database
-    MONGODB_URL: str = "mongodb://localhost:27017"
+    MONGO_URI: Optional[str] = None
+    MONGODB_URL: Optional[str] = None
     MONGODB_DB_NAME: str = "mentor_student_db"
+
+    def get_mongo_uri(self) -> str:
+        uri = self.MONGO_URI or self.MONGODB_URL or os.getenv("MONGO_URI") or os.getenv("MONGODB_URL")
+        if not uri:
+            raise RuntimeError("MONGO_URI environment variable is not configured")
+        return uri
 
     # CORS
     CORS_ORIGINS: Union[List[str], str] = ["*"]

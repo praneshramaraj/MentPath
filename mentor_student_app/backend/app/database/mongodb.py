@@ -14,23 +14,25 @@ db_instance = MongoDB()
 
 
 async def connect_to_mongo() -> None:
-    """Initialize MongoDB connection pool on app startup and create unique indexes."""
-    logger.info(f"Connecting to MongoDB at {settings.MONGODB_URL}...")
+    """Initialize MongoDB connection pool on app startup using MONGO_URI and create unique indexes."""
+    mongo_uri = settings.get_mongo_uri()
+    logger.info("Connecting to MongoDB...")
     db_instance.client = AsyncIOMotorClient(
-        settings.MONGODB_URL,
+        mongo_uri,
         serverSelectionTimeoutMS=5000
     )
     db_instance.db = db_instance.client[settings.MONGODB_DB_NAME]
     try:
         # Ping the server to verify connectivity
         await db_instance.client.admin.command('ping')
-        logger.info(f"Successfully connected to MongoDB database '{settings.MONGODB_DB_NAME}'")
+        logger.info("MongoDB connection successful")
 
         # Create unique index for users email
         await db_instance.db[USERS_COLLECTION].create_index("email", unique=True)
         logger.info(f"MongoDB unique index ensured on '{USERS_COLLECTION}.email'")
     except Exception as e:
         logger.error(f"Failed to initialize MongoDB connection or indexes: {e}")
+        raise
 
 
 async def close_mongo_connection() -> None:

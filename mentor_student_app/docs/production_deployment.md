@@ -62,7 +62,7 @@ pip install -r requirements.txt
 cp .env.example .env
 nano .env
 ```
-Ensure `JWT_SECRET_KEY`, `MONGODB_URL`, and `GEMINI_API_KEY` are populated with production secrets.
+Ensure `JWT_SECRET_KEY`, `MONGO_URI`, and `GEMINI_API_KEY` are populated with production secrets.
 
 ---
 

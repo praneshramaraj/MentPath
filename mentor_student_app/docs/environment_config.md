@@ -12,7 +12,7 @@ The FastAPI backend uses `pydantic-settings` to parse configuration variables fr
 
 | Variable Name | Required | Default Value | Description |
 | :--- | :---: | :--- | :--- |
-| `MONGODB_URL` | **Yes** | `mongodb://localhost:27017` | MongoDB connection URI. |
+| `MONGO_URI` | **Yes** | `None` (must be provided via env or `.env`) | MongoDB connection URI (e.g. MongoDB Atlas connection string). |
 | `MONGODB_DB_NAME` | **Yes** | `mentor_student_db` | Database name for application data. |
 | `JWT_SECRET_KEY` | **Yes** | *[Generate random 64-char key]* | Secret key for signing PyJWT access tokens. |
 | `JWT_ALGORITHM` | No | `HS256` | HMAC signing algorithm. |
@@ -29,7 +29,7 @@ The FastAPI backend uses `pydantic-settings` to parse configuration variables fr
 
 ```ini
 # Database Configuration
-MONGODB_URL=mongodb://mongo_admin:SecurePassword123@127.0.0.1:27017/mentor_student_db?authSource=admin
+MONGO_URI=mongodb+srv://user:password@cluster.mongodb.net/mentor_student_db?retryWrites=true&w=majority
 MONGODB_DB_NAME=mentor_student_db
 
 # Security & Authentication
