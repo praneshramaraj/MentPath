@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import '../config/api_config.dart';
 import '../constants/app_constants.dart';
 import 'app_exception.dart';
 
@@ -12,7 +13,7 @@ class ApiClient {
 
   ApiClient({http.Client? client, String? baseUrl})
       : _client = client ?? http.Client(),
-        _baseUrl = baseUrl ?? AppConstants.apiBaseUrl;
+        _baseUrl = baseUrl ?? ApiConfig.apiBaseUrl;
 
   void setAuthToken(String? token) {
     _authToken = token;
